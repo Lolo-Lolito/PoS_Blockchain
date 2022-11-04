@@ -1,23 +1,20 @@
-from Transaction import Transaction
 from Wallet import Wallet
 from TransactionPool import TransactionPool
+from Block import Block
+import pprint
+from Blockchain import Blockchain
+from BlockchainUtils import BlockchainUtils
+from Crypto.Hash import SHA256
+from AccountModel import AccountModel
+from Node import Node
+import sys
 
 if __name__ == "__main__":
-    sender = 'sender'
-    receiver = 'receiver'
-    amount = 1
-    type = 'TRANSFER'
-
-    wallet = Wallet()
-    fraudulentWallet = Wallet()
-    pool = TransactionPool()
-
-    transaction = wallet.createTransaction(receiver, amount, type)
     
-    if pool.transactionExists(transaction) == False:
-        pool.addTransaction(transaction)
+    ip = sys.argv[1]
+    port = int(sys.argv[2])
+    apiPort = int(sys.argv[3])
 
-    if pool.transactionExists(transaction) == False:
-        pool.addTransaction(transaction)
-
-    print(pool.transactions)
+    node = Node(ip, port)
+    node.startP2P()
+    node.startAPI(apiPort)
